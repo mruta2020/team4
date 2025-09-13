@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 /**
  * PrimeNG Module
  */
-import { ButtonModule } from 'primeng/button';
-import { Drawer, DrawerModule } from 'primeng/drawer';
-import { PanelMenu } from 'primeng/panelmenu';
-import { TooltipModule } from 'primeng/tooltip';
-import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../../services/user.service';
-import { User } from '../../../model/user.model';
+import {ButtonModule} from 'primeng/button';
+import {Drawer, DrawerModule} from 'primeng/drawer';
+import {PanelMenu} from 'primeng/panelmenu';
+import {TooltipModule} from 'primeng/tooltip';
+import {MenuModule} from 'primeng/menu';
+import {MenuItem} from 'primeng/api';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../../../services/user.service';
+import {User} from '../../../model/user.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.userService.currentUser();
+    this.user = this.userService.currentUser;
 
     if (this.user?.type === 'ente') {
       this.items = [
@@ -66,7 +66,7 @@ export class SidebarComponent implements OnInit {
           key: '4',
           label: 'Sign out',
           icon: 'pi pi-sign-out',
-          routerLink: this.userService.currentUser().type === 'ente' ? '/ente/login' : '/user/login'
+          routerLink: this.userService.currentUser?.type === 'ente' ? '/ente/login' : '/user/login'
         }
       ];
     } else if (this.user?.type === 'user') {
@@ -87,12 +87,11 @@ export class SidebarComponent implements OnInit {
           key: '2',
           label: 'Timeline Accessi',
           icon: 'pi pi-clock',
-          routerLink: '/home/access-log'
-        routerLink: '/home/logAccess'
-      },
-      {
-        key: '3',
-        label: 'Profilo',
+          routerLink: '/home/logAccess'
+        },
+        {
+          key: '3',
+          label: 'Profilo',
           icon: 'pi pi-user',
           routerLink: '/home/profile'
         },
@@ -100,7 +99,7 @@ export class SidebarComponent implements OnInit {
           key: '4',
           label: 'Sign out',
           icon: 'pi pi-sign-out',
-          routerLink: this.userService.currentUser().type === 'ente' ? '/ente/login' : '/user/login'
+          routerLink: this.userService.currentUser?.type === 'ente' ? '/ente/login' : '/user/login'
         }
       ];
     }

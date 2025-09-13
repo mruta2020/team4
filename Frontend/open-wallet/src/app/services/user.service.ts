@@ -1,9 +1,9 @@
-import { Injectable, signal } from "@angular/core";
-import { User } from "../model/user.model";
-import { UserType } from "../types/types";
-import { map, Observable, of } from "rxjs";
-import { USER_MOCK } from "../mock/user.mock";
-import { Router } from "@angular/router";
+import {Injectable, signal} from "@angular/core";
+import {User} from "../model/user.model";
+import {UserType} from "../types/types";
+import {map, Observable, of} from "rxjs";
+import {USER_MOCK} from "../mock/user.mock";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -24,16 +24,19 @@ export class UserService {
     return this._currentUser();
   }
 
-  setCurrentUser(user: User) {
-    this._currentUser.set(user);
+  set currentUser(user: User) {
+    if (user) {
+      this._currentUser.set(user);
+      localStorage.setItem("user", JSON.stringify(this._currentUser()));
+    } else {
+      localStorage.removeItem("user");
+    }
   }
-
 
   onLogin(type: UserType): Observable<User> {
     return of(USER_MOCK.find(item => item.type == type)).pipe(
       map((user) => {
-        this._currentUser.set(user);
-        localStorage.setItem("user", JSON.stringify(this._currentUser()));
+        this.currentUser = user;
         return user;
       })
     );
@@ -42,12 +45,6 @@ export class UserService {
   onLogout() {
     const lastType = this._currentUser()?.type;
     this._currentUser.set(undefined);
-
-    if (lastType === 'ente') {
-      this.router.navigate(['/ente/login']);
-    } else if (lastType === 'user') {
-      this.router.navigate(['/user/login']);
-    }
   }
 
 
