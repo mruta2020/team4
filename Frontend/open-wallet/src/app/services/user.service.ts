@@ -43,10 +43,8 @@ export class UserService {
   }
 
   onLogout() {
-    const lastType = this._currentUser()?.type;
-    this._currentUser.set(undefined);
+    this.currentUser = undefined;
   }
-
 
   isEnte(): boolean {
     return this._currentUser()?.type === 'ente';

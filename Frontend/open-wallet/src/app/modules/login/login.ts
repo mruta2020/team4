@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Card} from "primeng/card";
 import {Button} from "primeng/button";
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
@@ -15,11 +15,15 @@ import {UserType} from "../../types/types";
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class Login {
+export class Login implements OnInit {
 
   constructor(private userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
+    this.userService.onLogout();
   }
 
   onLogin() {

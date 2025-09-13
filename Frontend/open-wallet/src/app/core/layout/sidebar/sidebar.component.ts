@@ -10,33 +10,31 @@ import {PanelMenu} from 'primeng/panelmenu';
 import {TooltipModule} from 'primeng/tooltip';
 import {MenuModule} from 'primeng/menu';
 import {MenuItem} from 'primeng/api';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {UserService} from '../../../services/user.service';
 import {User} from '../../../model/user.model';
+import {filter} from 'rxjs';
+
 export interface AppMenuItem extends MenuItem {
   key?: string;
 }
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [CommonModule, ButtonModule, DrawerModule, MenuModule, TooltipModule]
+  imports: [CommonModule, ButtonModule, DrawerModule, MenuModule, TooltipModule, RouterLink, RouterLinkActive]
 })
 export class SidebarComponent implements OnInit {
 
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
   public items: AppMenuItem[] = [];
-
-  public visible: boolean = false;
   public expanded: boolean = false;
-
-  public selectedItem: any;
-
   private user: User;
 
-  activeKey: string | null = null;
+  activeUrl: string | null = null;
 
 
   constructor(
@@ -46,6 +44,17 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.activeUrl = this._router.url;
+    this._router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+        this.activeUrl = event.urlAfterRedirects;
+        console.log("URL corrente:", this.activeUrl);
+      }
+    );
+
+
     this.user = this.userService.currentUser;
 
     if (this.user?.type === 'ente') {
@@ -71,6 +80,9 @@ export class SidebarComponent implements OnInit {
           key: '4',
           label: 'Sign out',
           icon: 'pi pi-sign-out',
+          command: () => {
+            this.userService.onLogout();
+          },
           routerLink: this.userService.currentUser?.type === 'ente' ? '/ente/login' : '/user/login'
         }
       ];
@@ -97,13 +109,15 @@ export class SidebarComponent implements OnInit {
         {
           key: '3',
           label: 'Profilo',
-          icon: 'pi pi-user',
-          routerLink: '/home/profile'
+          icon: 'pi pi-user'
         },
         {
           key: '4',
           label: 'Sign out',
           icon: 'pi pi-sign-out',
+          command: () => {
+            this.userService.onLogout();
+          },
           routerLink: this.userService.currentUser?.type === 'ente' ? '/ente/login' : '/user/login'
         }
       ];
@@ -140,10 +154,8 @@ export class SidebarComponent implements OnInit {
 
 
   handleClick(item: any) {
-  if (item.command) {
-    item.command();
-  } else if (item.routerLink) {
-    this.navigate(item.routerLink);
-    this.activeKey = item.key;   // aggiorno attivo
-  }}
+    if (item.command) {
+      item.command();
+    }
+  }
 }

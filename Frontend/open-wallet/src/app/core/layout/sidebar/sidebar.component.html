@@ -3,7 +3,12 @@
 </div>
 <div class="d-flex flex-column gap-2">
     @for (item of items; track $index) {
-    <p-button [icon]="item.icon" label="{{item.label}}" variant="text" severity="secondary" [ngClass]="{ 'active-btn': item?.key === activeKey }"  (onClick)="handleClick(item)">
-    </p-button>
+        <p-button [icon]="item.icon"
+                  [label]="item.label"
+                  variant="text"
+                  [routerLink]="item.routerLink"
+                  severity="secondary"
+                  [routerLinkActive]="item.routerLink === activeUrl ? 'active-btn': ''">
+        </p-button>
     }
 </div>
