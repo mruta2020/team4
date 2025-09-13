@@ -1,44 +1,46 @@
-import {IssueResult,CertRecord} from "./types";
+export type LedgerState = "not-found" | "valid" | "revoked" | "mismatch";
 
-const db: CertRecord[] = [];
+export type ChainRecord = {
+    certId: string;
+    hash: string;
+    revoked: boolean;
+    issuedAt: number;
+    txHash: string;
+    blockNumber: number;
+    fileName?: string;
+};
 
-//simulate issue cert on blockchain
-export function issueCertOnChain(certId : string, hash : string): IssueResult {
+const db: ChainRecord[] = [];
+let height = 1;
+const makeTx = () => "0xAAAA" + Date.now().toString(16) + Math.random().toString(16).slice(2, 8);
 
-    const exists = db.find(c => c.certId === certId);
-    if (exists) throw new Error("Cert already issued");
-
-    const record: CertRecord = {
+export function issueCert(certId: string, hash: string, fileName?: string) {
+    if (db.find(r => r.certId === certId)) throw new Error("exists");
+    const rec: ChainRecord = {
         certId,
         hash,
         revoked: false,
-        issuedAt: Date.now()
+        issuedAt: Date.now(),
+        txHash: makeTx(),
+        blockNumber: height++,
+        fileName
     };
-
-    db.push(record);
-    return { txHash: "0xFAKE" + Date.now().toString(16), record }
+    db.push(rec);
+    return { txHash: rec.txHash, blockNumber: rec.blockNumber, record: rec };
 }
 
-
-//Simulate verify on blockchain
-export function verifyCert(certId: string, hash: string) {
-    const cert = db.find(c => c.certId === certId && c.hash === hash);
-    if (!cert) return { valid: false, reason: "not-found" };
-    if (cert.revoked) return { valid: false, reason: "revoked" };
-    return { valid: true, reason: "ok" };
+export function verifyCert(certId: string, hash: string): { state: LedgerState } {
+    const rec = db.find(r => r.certId === certId);
+    if (!rec) return { state: "not-found" };
+    if (rec.revoked) return { state: "revoked" };
+    return rec.hash === hash ? { state: "valid" } : { state: "mismatch" };
 }
 
-
-//Revoke cert on blockchain
 export function revokeCert(certId: string) {
-    const cert = db.find(c => c.certId === certId);
-    if (!cert) throw new Error("Cert not found");
-    if (cert.revoked) throw new Error("already revoked");
-
-    cert.revoked = true;
-    return { txHash: "0xFAKE" + Date.now().toString(16) };
+    const rec = db.find(r => r.certId === certId);
+    if (!rec) throw new Error("not-found");
+    rec.revoked = true;
+    return { txHash: makeTx(), blockNumber: height++ };
 }
 
-export function listAllCerts() {
-    return db;
-}
+export function listAll() { return db; }
