@@ -22,7 +22,7 @@
             <td>{{ cert.fileName }}</td>
             <td>
                 <app-log-access-state [type]="cert.status"
-                                      [label]="('CERTIFICATES.' +  cert.status) | translate"></app-log-access-state>
+                                      [label]="('CERTIFICATES.' +  cert.status)"></app-log-access-state>
             </td>
             <td class="d-flex gap-2">
                 <p-splitbutton label="Azioni" [model]="items" severity="secondary" />

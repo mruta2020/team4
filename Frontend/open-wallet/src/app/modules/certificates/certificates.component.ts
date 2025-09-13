@@ -11,7 +11,9 @@ import {Router} from '@angular/router';
 import {LogAccess} from "../../model/log-access.model";
 import { Certificate } from '../../model/certificate.model';
 import { SplitButtonModule } from 'primeng/splitbutton';
-
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-certificates',
@@ -27,6 +29,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     SplitButtonModule,
     ToastModule,
     LogAccessState,
+    FloatLabelModule,
+    CommonModule,
+    FormsModule
   ],
   standalone: true,
   providers: [MessageService,]
