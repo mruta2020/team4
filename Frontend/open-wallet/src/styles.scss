@@ -3,9 +3,15 @@
 
 :root {
 
-  --app-success: green;
-  --app-error: red;
-  --app-warning: yellow;
+  --app-success-bg: #E9FBEA;
+  --app-error-bg: #FBE9E9;
+  --app-warning-bg: #F7F8D8;
+  --app-info-bg: #F1F4F3;
+
+  --app-success: #20B029;
+  --app-error: #B02020;
+  --app-warning: #ADB020;
+  --app-info: #353636;
 
   --neutral--500: rgba(100, 103, 104, 1);
   --neutral--700: rgba(50, 51, 52, 1);

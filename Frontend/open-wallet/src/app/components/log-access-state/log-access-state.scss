@@ -1,16 +1,27 @@
 .p-chip {
   font-size: 10px;
   font-weight: 600;
+  border-radius: 8px;
+  padding-block: 0.5rem;
+  padding-inline: 0.5rem;
+}
+
+.info {
+  background: var(--app-info-bg);
+  color: var(--app-info);
 }
 
 .verified {
-  background: var(--app-success);
+  background: var(--app-success-bg);
+  color: var(--app-success);
 }
 
 .not-verified {
-  background: var(--app-error);
+  background: var(--app-error-bg);
+  color: var(--app-error);
 }
 
 .pending {
-  background: var(--app-warning);
+  background: var(--app-warning-bg);
+  color: var(--app-warning);
 }
