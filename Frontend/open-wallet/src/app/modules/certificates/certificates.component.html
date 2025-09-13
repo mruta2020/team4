@@ -47,17 +47,13 @@
                     <label for="alias">Nome certificato</label>
                 </p-floatlabel>
             </div>
-            <div class="col-12" style="display: none;">
+            <div class="col-12">
                 <p-fileupload #fu mode="basic"
                               chooseLabel="Scegli il certificato" chooseIcon="pi pi-upload"
                               name="demo[]"
                               accept=".pdf,application/pdf"
                               maxFileSize="1000000"
                               (onSelect)="onUpload($event)"/>
-
-                <p-button label="Scegli il certificato"
-                          (onClick)="fu.upload()" severity="success"/>
-
 
             </div>
         </div>
