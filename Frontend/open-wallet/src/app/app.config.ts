@@ -5,21 +5,24 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Material from '@primeuix/themes/material';
+import { provideHttpClient } from '@angular/common/http';
+import MyPreset from './themes/preset';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-        providePrimeNG({
-            theme: {
-                preset: Material,
-                  options: {
-                    darkModeSelector: false || 'none'
-                }
-            }
-        })
+    providePrimeNG({
+      theme: {
+        preset: MyPreset,
+        options: {
+          darkModeSelector: false || 'none'
+        }
+      }
+    })
   ]
 };
