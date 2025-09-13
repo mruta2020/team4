@@ -17,7 +17,9 @@
             <td>{{ log.accessType }}</td>
             <td>{{ log.certificate.name }}</td>
             <td>
-                <app-log-access-state [status]="log.status"></app-log-access-state>
+                <app-log-access-state
+                        [type]="log.status"
+                        [label]="('CERTIFICATES.' + log.status) | translate"></app-log-access-state>
             </td>
             <td>{{ log.ip }}
                 @if (log.location) {

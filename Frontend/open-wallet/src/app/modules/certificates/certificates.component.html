@@ -9,17 +9,28 @@
 
     <div class="flex flex-wrap gap-6 items-center justify-between">
         <div class="row">
-            <p-fileupload #fu mode="basic"
-                          chooseLabel="Scegli il certificato" chooseIcon="pi pi-upload"
-                          name="demo[]"
-                          accept=".pdf,application/pdf"
-                          maxFileSize="1000000"
-                          (onSelect)="onUpload($event)"/>
+            <div class="col-12 pb-4">
+                <p-floatlabel class="w-100" variant="in">
+                    <input pInputText id="alias"
+                           class="w-100"
+                           required
+                           [(ngModel)]="alias" autocomplete="off"/>
+                    <label for="alias">Nome certificato</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-12">
+                <p-fileupload #fu mode="basic"
+                              chooseLabel="Scegli il certificato" chooseIcon="pi pi-upload"
+                              name="demo[]"
+                              accept=".pdf,application/pdf"
+                              maxFileSize="1000000"
+                              (onSelect)="onUpload($event)"/>
+            </div>
         </div>
         <div class="pt-4 d-flex justify-content-end">
             <p-button label="Carica"
-                      [disabled]="!file"
-                      (onClick)="onUploadFile()" severity="primary"/>
+                      [disabled]="!file || !alias"
+                      (onClick)="onUploadFile()" severity="success"/>
         </div>
     </div>
 </p-dialog>

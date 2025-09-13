@@ -1,15 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {LogAccessState} from '../../components/log-access-state/log-access-state';
-import {DatePipe} from '@angular/common';
 import {TableModule} from 'primeng/table';
-import {LogAccess} from '../../model/log-access.model';
 import {ButtonModule} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 import {FileSelectEvent, FileUpload, FileUploadEvent} from 'primeng/fileupload';
 import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
-import {MOCK_LOGS_ACCESS} from "../../mock/log-access";
 import {CertificateService} from "../../services/certificate.service";
+import {FormsModule} from "@angular/forms";
+import {InputText} from "primeng/inputtext";
+import {FloatLabel} from "primeng/floatlabel";
 
 
 @Component({
@@ -21,12 +20,16 @@ import {CertificateService} from "../../services/certificate.service";
     ButtonModule,
     Dialog,
     FileUpload,
-    ToastModule
+    ToastModule,
+    FormsModule,
+    InputText,
+    FloatLabel
   ],
   standalone: true,
 })
 export class CertificatesComponent implements OnInit {
 
+  alias: string;
   certificates = [];
   visible: boolean = false;
   file: File;
@@ -37,6 +40,8 @@ export class CertificatesComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log(this.file);
+
     this.certificateService.getAllCertificate().subscribe((res) => {
       console.log(res);
       this.certificates = res;
@@ -45,6 +50,7 @@ export class CertificatesComponent implements OnInit {
   }
 
   public showDialog() {
+    console.log(this.file);
     this.visible = true;
   }
 
@@ -55,8 +61,9 @@ export class CertificatesComponent implements OnInit {
 
   onUploadFile() {
 
-    console.log("onUploadFile")
-    this.certificateService.uploadFile(this.file).subscribe((res) => {
+    console.log(this.file);
+
+    this.certificateService.uploadFile(this.file, this.alias).subscribe((res) => {
 
       this.messageService.add({
         severity: 'success', // success, info, warn, error
