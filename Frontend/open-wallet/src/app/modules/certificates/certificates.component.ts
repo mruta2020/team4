@@ -5,12 +5,12 @@ import {TableModule} from 'primeng/table';
 import {LogAccess} from '../../model/log-access.model';
 import {ButtonModule} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
-import {FileUpload, FileUploadEvent} from 'primeng/fileupload';
+import {FileSelectEvent, FileUpload, FileUploadEvent} from 'primeng/fileupload';
 import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 import {MOCK_LOGS_ACCESS} from "../../mock/log-access";
+import {CertificateService} from "../../services/certificate.service";
 import {Router} from '@angular/router';
-import {CertificateService} from '../../services/certificate.service';
 
 
 @Component({
@@ -18,38 +18,58 @@ import {CertificateService} from '../../services/certificate.service';
   templateUrl: './certificates.component.html',
   styleUrls: ['./certificates.component.scss'],
   imports: [
-    DatePipe,
-    LogAccessState,
     TableModule,
     ButtonModule,
     Dialog,
     FileUpload,
-    ToastModule
+    ToastModule,
+    LogAccessState
   ],
   standalone: true,
   providers: [MessageService,]
 })
 export class CertificatesComponent implements OnInit {
+
+  certificates = [];
   visible: boolean = false;
+  file: File;
 
   data: LogAccess[];
-
-  constructor(private messageService: MessageService, private certificateService: CertificateService, public _router: Router) {
+  constructor(private messageService: MessageService,
+              public _router: Router,
+              private certificateService: CertificateService) {
   }
 
   ngOnInit() {
-    //this.data = MOCK_LOGS_ACCESS.splice(0, 5);
-    this.certificateService.getList().subscribe((res) => {
-      this.data = res;
+    this.certificateService.getAllCertificate().subscribe((res) => {
+      this.certificates = res;
     });
+
   }
 
   public showDialog() {
     this.visible = true;
   }
 
-  onUpload(event: FileUploadEvent) {
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'File caricato con successo'});
+  onUpload(event: FileSelectEvent) {
+    console.log(event);
+    this.file = event.files[0];
+  }
+
+  onUploadFile() {
+
+    console.log("onUploadFile")
+    this.certificateService.uploadFile(this.file).subscribe((res) => {
+
+      this.messageService.add({
+        severity: 'success', // success, info, warn, error
+        summary: 'Success',
+        detail: 'File caricato con successo'
+      });
+
+      console.log(res);
+    });
+
   }
 
   download(id) {

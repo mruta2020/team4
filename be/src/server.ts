@@ -2,16 +2,27 @@ import { Router, type Express } from "express";
 import express from "express";
 import bodyParser from "body-parser";
 import certificateRouter from "./controllers/certificates/certificate";
+import cors from "cors";
 import verifyRouter from "./controllers/verifyHash/verify";
 import {auth} from "./middleware/auth";
+import {initToken} from "./middleware/tokenGenerator";
 
 const router = Router();
 
 const app = express();
+
+const token = initToken();
+console.log("Use this token for Authorization: Bearer " + token);
+
 app.use(bodyParser.json());
 
-app.use("/certificate",auth, certificateRouter);
+app.use(cors({
+  origin: "http://localhost:4200"
+}));
+
+app.use("/certificates",auth, certificateRouter);
 app.use("/verify-hash",auth, verifyRouter);
+
 
 app.listen(3000, () => console.log("Server on http://localhost:3000"));
 

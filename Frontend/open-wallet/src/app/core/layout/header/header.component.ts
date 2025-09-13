@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import {UserService} from "../../../services/user.service";
 
 @Component({
   standalone: true,
@@ -11,7 +12,7 @@ import { ButtonModule } from 'primeng/button';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(public userService: UserService) { }
 
   ngOnInit() {
   }
