@@ -54,20 +54,14 @@ export class CertificatesComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.certificateService.getAllCertificate().subscribe((res) => {
-      this.certificates = res;
-    });
-
+    this._init();
   }
 
   public showDialog() {
-    console.log(this.file);
     this.visible = true;
   }
 
   onUpload(event: FileSelectEvent) {
-    console.log(event);
     this.file = event.files[0];
   }
 
@@ -83,6 +77,9 @@ export class CertificatesComponent implements OnInit {
         detail: 'File caricato con successo'
       });
 
+      this._init();
+
+      this.visible = false;
       console.log(res);
     });
   }
@@ -97,5 +94,11 @@ export class CertificatesComponent implements OnInit {
 
   showDetail(id) {
     this._router.navigateByUrl('/home/certificate/' + id)
+  }
+
+  private _init(){
+    this.certificateService.getAllCertificate().subscribe((res) => {
+      this.certificates = res;
+    });
   }
 }
