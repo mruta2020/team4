@@ -1,0 +1,36 @@
+# Node dependencies
+node_modules/
+
+# Output TypeScript
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# Coverage / test
+coverage/
+*.lcov
+
+# Optional: lock files se vuoi escluderli (ma in genere si tengono)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
