@@ -15,7 +15,7 @@ app.use(cors({
   origin: "http://localhost:4200"
 }));
 
-app.use("/certificate",auth, certificateRouter);
+app.use("/certificates",auth, certificateRouter);
 app.use("/verify-hash",auth, verifyRouter);
 
 app.listen(3000, () => console.log("Server on http://localhost:3000"));

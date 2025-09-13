@@ -24,7 +24,7 @@ export class CertificateService {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post(`${this.url}/certificates/upload`, formData);
+    return this.http.post(`${this.url}/certificates`, formData);
   }
 
   getAllCertificate(){

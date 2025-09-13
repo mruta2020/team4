@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {PrimeTemplate} from "primeng/api";
 import {TableModule} from "primeng/table";
@@ -17,12 +17,11 @@ import {LogAccessState} from "../../components/log-access-state/log-access-state
   templateUrl: './log-access.html',
   styleUrl: './log-access.scss'
 })
-export class LogAccessComponent {
+export class LogAccessComponent implements OnInit{
 
-  data: LogAccess[];
+  data: LogAccess[] = MOCK_LOGS_ACCESS.splice(0, 5);
 
   ngOnInit() {
-    this.data = MOCK_LOGS_ACCESS.splice(0, 5);
   }
 
 }

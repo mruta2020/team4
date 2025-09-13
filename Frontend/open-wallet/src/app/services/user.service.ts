@@ -12,12 +12,16 @@ export class UserService {
 
   private _currentUser = signal<User>(undefined);
 
-  constructor(private router: Router) {
+  constructor() {
 
     const localUser = localStorage.getItem("user");
     if (localUser) {
       this._currentUser.set(JSON.parse(localUser));
     }
+  }
+
+  get jwtToken(){
+    return localStorage.getItem("jwt");
   }
 
   get currentUser() {
@@ -27,6 +31,7 @@ export class UserService {
   set currentUser(user: User) {
     if (user) {
       this._currentUser.set(user);
+      localStorage.setItem('jwt', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30')
       localStorage.setItem("user", JSON.stringify(this._currentUser()));
     } else {
       localStorage.removeItem("user");
@@ -54,5 +59,8 @@ export class UserService {
     return this._currentUser()?.type === 'user';
   }
 
+  public formatName() {
+    return this.currentUser?.type == 'user' ? this.currentUser?.name + " " + this.currentUser?.surname : this.currentUser?.legalName;
+  }
 
 }

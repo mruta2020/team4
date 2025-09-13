@@ -57,70 +57,44 @@ export class SidebarComponent implements OnInit {
 
     this.user = this.userService.currentUser;
 
+    this.items = [
+      {
+        key: '4',
+        label: 'Sign out',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this.userService.onLogout();
+        },
+        routerLink: this.userService.currentUser?.type === 'ente' ? '/ente/login' : '/user/login'
+      }
+    ];
+
+
     if (this.user?.type === 'ente') {
-      this.items = [
-        {
-          key: '0',
-          label: 'Dashboard',
-          icon: 'pi pi-chart-pie',
-          routerLink: '/home/dashboard'
-        },
-        {
-          key: '1',
-          label: 'Certificazioni',
-          icon: 'pi pi-verified',
-          routerLink: '/home/certificates'
-        },
-        {
-          key: '3',
-          label: 'Impostazioni',
-          icon: 'pi pi-cog'
-        },
-        {
-          key: '4',
-          label: 'Sign out',
-          icon: 'pi pi-sign-out',
-          command: () => {
-            this.userService.onLogout();
-          },
-          routerLink: this.userService.currentUser?.type === 'ente' ? '/ente/login' : '/user/login'
-        }
-      ];
+
+      this.items.splice(0, 0, {
+        key: '1',
+        label: 'Certificazioni',
+        icon: 'pi pi-verified',
+        routerLink: '/home/certificates'
+      });
+
     } else if (this.user?.type === 'user') {
-      this.items = [
-        {
-          key: '0',
-          label: 'Dashboard',
-          icon: 'pi pi-chart-pie',
-          routerLink: '/home/dashboard'
-        },
-        {
-          key: '1',
-          label: 'Le mie Certificazioni',
-          icon: 'pi pi-verified',
-          routerLink: '/home/certificates'
-        },
-        {
-          key: '2',
-          label: 'Timeline Accessi',
-          icon: 'pi pi-clock',
-          routerLink: '/home/logAccess'
-        },
-        {
-          key: '3',
-          label: 'Profilo',
-          icon: 'pi pi-user'
-        },
-        {
-          key: '4',
-          label: 'Sign out',
-          icon: 'pi pi-sign-out',
-          command: () => {
-            this.userService.onLogout();
-          },
-          routerLink: this.userService.currentUser?.type === 'ente' ? '/ente/login' : '/user/login'
-        }
-      ];
+
+      this.items.splice(0, 0, {
+        key: '1',
+        label: 'Le mie Certificazioni',
+        icon: 'pi pi-verified',
+        routerLink: '/home/certificates'
+      });
+
+      this.items.splice(1, 0, {
+        key: '2',
+        label: 'Timeline Accessi',
+        icon: 'pi pi-clock',
+        routerLink: '/home/logAccess'
+      });
+
     }
   }
 
