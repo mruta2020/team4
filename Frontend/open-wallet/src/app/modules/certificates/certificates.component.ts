@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {LogAccessState} from '../../components/log-access-state/log-access-state';
-import {DatePipe} from '@angular/common';
-import {TableModule} from 'primeng/table';
-import {LogAccess} from '../../model/log-access.model';
-import {ButtonModule} from 'primeng/button';
-import {Dialog} from 'primeng/dialog';
-import {FileSelectEvent, FileUpload, FileUploadEvent} from 'primeng/fileupload';
-import {MessageService} from 'primeng/api';
-import {ToastModule} from 'primeng/toast';
-import {MOCK_LOGS_ACCESS} from "../../mock/log-access";
-import {CertificateService} from "../../services/certificate.service";
+import { Component, OnInit } from '@angular/core';
+import { LogAccessState } from '../../components/log-access-state/log-access-state';
+import { DatePipe } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { LogAccess } from '../../model/log-access.model';
+import { ButtonModule } from 'primeng/button';
+import { Dialog } from 'primeng/dialog';
+import { FileSelectEvent, FileUpload, FileUploadEvent } from 'primeng/fileupload';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { MOCK_LOGS_ACCESS } from "../../mock/log-access";
+import { CertificateService } from "../../services/certificate.service";
+import { Certificate } from '../../model/certificate.model';
 
 
 @Component({
@@ -32,8 +33,11 @@ export class CertificatesComponent implements OnInit {
   visible: boolean = false;
   file: File;
 
+  selectedCertificate!: Certificate;
+  metaKey: boolean = true;
+
   constructor(private messageService: MessageService,
-              private certificateService: CertificateService) {
+    private certificateService: CertificateService) {
   }
 
   ngOnInit() {
@@ -65,6 +69,9 @@ export class CertificatesComponent implements OnInit {
 
       console.log(res);
     });
+  }
 
+  public selectCertificate(cert: Certificate) {
+    console.log('cert',cert)
   }
 }
