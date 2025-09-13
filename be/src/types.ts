@@ -35,6 +35,7 @@ export type CertificateResponse = {
     id: string;
     name: string;
     state: string;
+    alias: string;
     issuer: Issuer;
     issueDate: Date;
     algorithm: string;

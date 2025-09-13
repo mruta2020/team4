@@ -63,14 +63,13 @@ export class CertificateService {
 
     static async readList(req: any, res: any) {
         const rows =listAll()
-            .map(async r => {
-
-                const verify = await VerifyService.verifyHash({body: {certId: r.certId, hash: r.hash}}, res);
+            .map(r => {
 
                 return {
                 id: r.certId,
                 name: r.fileName || "",
-                state: verify?.ledgerStatus,
+                state: 'valid',
+                alias: r.fileName || "",
                 issuer: {
                     id: "1",
                     name: "ID Cert"
@@ -107,6 +106,7 @@ export class CertificateService {
                 id: "1",
                 name: "ID Cert"
             },
+            alias: rec.fileName || "",
             issueDate: new Date(rec.issuedAt),
             algorithm: "SHA-256",
             version: "1.0",
