@@ -21,7 +21,7 @@ router.post("/", upload.single("file"), async (req, res) => {
         const certId = uuidv4();
         const fileBuffer = req.file.buffer;
         const hash = sha256Hex(fileBuffer.toString("base64"));
-       // const { txHash, record } = verifyCert(certId, hash);
+
         const a = detectFromFile(req.file);
 
         const signatureService = await SignatureService.verifySignature(a)

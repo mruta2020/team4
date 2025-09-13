@@ -1,6 +1,6 @@
 import {VerificationOutcome, Detected, SignatureAux} from "../types";
 import { verifyVcJwt } from "../verify/vc-jwt";
-import { verifyPkcs7, parseX509 } from "../verify/pki";
+import { verifyPkcs7,parseX509  } from "../verify/pki";
 
 export class SignatureService {
 
