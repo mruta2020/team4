@@ -28,11 +28,4 @@ export function verifyCert(certId: string, hash: string): { state: LedgerState }
     return rec.hash === hash ? { state: "valid" } : { state: "mismatch" };
 }
 
-export function revokeCert(certId: string) {
-    const rec = db.find(r => r.certId === certId);
-    if (!rec) throw new Error("not-found");
-    rec.revoked = true;
-    return { txHash: makeTx(), blockNumber: height++ };
-}
-
 export function listAll() { return db; }
