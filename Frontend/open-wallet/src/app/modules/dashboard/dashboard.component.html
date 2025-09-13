@@ -2,3 +2,33 @@
     dashboard works!
 </p>
 
+
+<p-table [value]="data" [paginator]="true" [rows]="5" [responsiveLayout]="'scroll'">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Data e Ora</th>
+            <th>Utente</th>
+            <th>Tipo Accesso</th>
+            <th>Certificato</th>
+            <th>Stato</th>
+            <th>IP / Località</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-log>
+        <tr>
+            <td>{{ log.date | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ log.user }}</td>
+            <td>{{ log.accessType }}</td>
+            <td>{{ log.certificate.name }}</td>
+            <td>
+                <app-log-access-state [status]="log.status"></app-log-access-state>
+            </td>
+            <td>{{ log.ip }}
+                @if (log.location) {
+                    {{ log.location }}
+                }
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
