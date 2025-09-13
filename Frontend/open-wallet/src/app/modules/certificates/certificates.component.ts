@@ -11,6 +11,7 @@ import {InputText} from "primeng/inputtext";
 import {FloatLabel} from "primeng/floatlabel";
 import {LogAccessState} from "../../components/log-access-state/log-access-state";
 import {TranslatePipe} from "@ngx-translate/core";
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -31,6 +32,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     TranslatePipe
   ],
   standalone: true,
+  providers: [MessageService,]
 })
 export class CertificatesComponent implements OnInit {
 
@@ -39,7 +41,9 @@ export class CertificatesComponent implements OnInit {
   visible: boolean = false;
   file: File;
 
+  data: LogAccess[];
   constructor(private messageService: MessageService,
+              public _router: Router,
               private certificateService: CertificateService) {
   }
 
@@ -76,5 +80,13 @@ export class CertificatesComponent implements OnInit {
       console.log(res);
     });
 
+  }
+
+  download(id) {
+    this._router.navigateByUrl('/home/certificate/' + id + '/download')
+  }
+
+  showDetail(id) {
+    this._router.navigateByUrl('/home/certificate/' + id)
   }
 }

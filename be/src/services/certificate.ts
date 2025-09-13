@@ -62,17 +62,27 @@ export class CertificateService {
     }
 
     static async readList(req: any, res: any) {
-        const rows = listAll()
-            .map(r => ({
-                certId: r.certId,
-                fileName: r.fileName ?? null,
-                hash: r.hash,                       // contentHash
-                status: r.revoked ? "revoked" : "valid",
-                issuedAt: r.issuedAt,               // epoch ms
-                txHash: r.txHash,
-                blockNumber: r.blockNumber
-            }))
-            .sort((a, b) => b.issuedAt - a.issuedAt); // più recenti in alto
+        const rows =listAll()
+            .map(async r => {
+
+                const verify = await VerifyService.verifyHash({body: {certId: r.certId, hash: r.hash}}, res);
+
+                return {
+                id: r.certId,
+                name: r.fileName || "",
+                state: verify?.ledgerStatus,
+                issuer: {
+                    id: "1",
+                    name: "ID Cert"
+                },
+                issueDate: new Date(r.issuedAt),
+                algorithm: "SHA-256",
+                version: "1.0",
+                fingerprint: r.hash,
+                isVerified: !r.revoked,
+                verificationDate: new Date(r.issuedAt)
+            }});
+           // .sort((a, b) => (await b).issuedAt - (await a).issuedAt); // più recenti in alto
 
         res.json(rows);
     }
