@@ -1,23 +1,23 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 /**
  * PrimeNG Module
  */
-import { ButtonModule } from 'primeng/button';
-import { Drawer, DrawerModule } from 'primeng/drawer';
-import { PanelMenu } from 'primeng/panelmenu';
-import { TooltipModule } from 'primeng/tooltip';
-import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
-import { Router } from '@angular/router';
+import {ButtonModule} from 'primeng/button';
+import {Drawer, DrawerModule} from 'primeng/drawer';
+import {PanelMenu} from 'primeng/panelmenu';
+import {TooltipModule} from 'primeng/tooltip';
+import {MenuModule} from 'primeng/menu';
+import {MenuItem} from 'primeng/api';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [CommonModule, ButtonModule, DrawerModule, MenuModule,TooltipModule]
+  imports: [CommonModule, ButtonModule, DrawerModule, MenuModule, TooltipModule]
 })
 export class SidebarComponent implements OnInit {
 
@@ -32,7 +32,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private _router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.items = [
@@ -40,13 +41,13 @@ export class SidebarComponent implements OnInit {
         key: '0',
         label: 'Dashboard',
         icon: 'pi pi-chart-pie',
-        routerLink: '/dashboard'
+        routerLink: '/home/dashboard'
       },
       {
         key: '1',
         label: 'Certificazioni',
         icon: 'pi pi-verified',
-        routerLink: '/certificates'
+        routerLink: '/home/certificates'
       },
       {
         key: '2',

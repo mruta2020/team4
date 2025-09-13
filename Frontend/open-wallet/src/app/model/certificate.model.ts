@@ -4,5 +4,11 @@ export class Certificate {
   id: string;
   name: string;
   state: string;
-  issuer: Issuer;
+  issueDate?: Date;
+  algorithm?: string;
+  version?: string;
+  fingerprint?: string;
+  isVerified?: boolean;
+  verificationDate?: Date;
+  issuer?: Issuer;
 }

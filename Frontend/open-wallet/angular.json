@@ -28,7 +28,8 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": ["src/app/theme/typography.scss",
+              "src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -81,7 +82,8 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": ["src/app/theme/typography.scss",
+              "src/styles.scss"]
           }
         }
       }

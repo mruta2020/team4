@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { LogAccessState } from '../../components/log-access-state/log-access-state';
 import { DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
-import { MOCK_LOGS_ACCESS } from '../../mock/certificate.mock';
 import { LogAccess } from '../../model/log-access.model';
 import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { FileUpload, FileUploadEvent } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import {MOCK_LOGS_ACCESS} from "../../mock/log-access";
 
 
 @Component({

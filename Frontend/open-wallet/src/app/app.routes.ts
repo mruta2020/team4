@@ -1,24 +1,42 @@
 import {Routes} from '@angular/router';
-import {DashboardComponent} from './modules/dashboard/dashboard.component';
-import {SignInComponent} from './modules/sign-in/sign-in.component';
-import { CertificatesComponent } from './modules/certificates/certificates.component';
+import {CertificateDetail} from "./modules/certificate-detail/certificate-detail";
+import {Login} from "./modules/login/login";
+import {LayoutComponent} from "./core/layout/layout/layout.component";
+import {authGuard} from "./guard/auth.guard";
+import {CertificatesComponent} from './modules/certificates/certificates.component';
+import {DashboardComponent} from "./modules/dashboard/dashboard.component";
 
 export const routes: Routes = [
   {
-    path: 'login',
-    component: SignInComponent
+    path: 'ente/login',
+    data: {type: 'ente'},
+    component: Login
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent
+    path: 'user/login',
+    data: {type: 'user'},
+    component: Login
   },
   {
-    path: 'certificates',
-    component: CertificatesComponent
+    path: 'home',
+    canActivate: [authGuard],
+    component: LayoutComponent,
+    children: [
+      {path: '', component: DashboardComponent},
+      {path: 'dashboard', component: DashboardComponent},
+      {
+        path: 'certificate/:id',
+        component: CertificateDetail
+      },
+      {
+        path: 'certificates',
+        component: CertificatesComponent
+      },
+    ]
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];

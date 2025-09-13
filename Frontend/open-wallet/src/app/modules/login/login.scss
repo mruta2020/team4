@@ -1,0 +1,31 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // pieno schermo
+  background-color: #f5f5f5;
+}
+
+.login-card {
+  width: 300px;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.login-title {
+  margin-bottom: 2rem;
+}
+
+.spid-button {
+  background-color: #1a73e8; // blu SPID
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+}
+
+.spid-button:hover {
+  background-color: #1669c1;
+}

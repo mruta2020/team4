@@ -8,13 +8,14 @@ export type ChainRecord = {
     txHash: string;
     blockNumber: number;
     fileName?: string;
+    ownerId?: string;
 };
 
 const db: ChainRecord[] = [];
 let height = 1;
 const makeTx = () => "0xAAAA" + Date.now().toString(16) + Math.random().toString(16).slice(2, 8);
 
-export function issueCert(certId: string, hash: string, fileName?: string) {
+export function issueCert(certId: string, hash: string, fileName?: string,ownerId?:string) {
     if (db.find(r => r.certId === certId)) throw new Error("exists");
     const rec: ChainRecord = {
         certId,
@@ -23,7 +24,8 @@ export function issueCert(certId: string, hash: string, fileName?: string) {
         issuedAt: Date.now(),
         txHash: makeTx(),
         blockNumber: height++,
-        fileName
+        fileName,
+        ownerId
     };
     db.push(rec);
     return { txHash: rec.txHash, blockNumber: rec.blockNumber, record: rec };

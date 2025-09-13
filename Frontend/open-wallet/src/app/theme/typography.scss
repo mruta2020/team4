@@ -1,0 +1,134 @@
+$base-font-size: 16 !default;
+
+$breakpoints: (
+        'iphone-se': 375px,
+        'small-mobile': 360px
+);
+
+$typography: (
+        'h1': (size: 49, weight: 700, line-height: 140%, font: 'main'),
+        'h2': (size: 39, weight: 700, line-height: 140%, font: 'main'),
+        'h3': (size: 31, weight: 700, line-height: 140%, font: 'main'),
+        'h4': (size: 25, weight: 700, line-height: 140%, font: 'main'),
+        'h5': (size: 20, weight: 700, line-height: 140%, font: 'main'),
+        'body': (size: 16, weight: 500, line-height: 140%, font: 'main'),
+        'caption': (size: 14.5, weight: 400, line-height: 160%, font: 'main'),
+        'caption-bold': (size: 14.5, weight: 700, line-height: 160%, font: 'main'),
+        'small': (size: 13, weight: 400, line-height: 140%, font: 'main'),
+        'small-bold': (size: 13, weight: 700, line-height: 140%, font: 'main'),
+        'body-bold': (size: 16, weight: 700, line-height: 140%, font: 'main'),
+        'body-serif': (size: 16, weight: 700, line-height: 140%, font: 'main'),
+        'body-semibold': (size: 16, weight: 600, line-height: 140%, font: 'main')
+);
+
+@mixin typography($key) {
+  $item: map-get($typography, $key);
+  $size: map-get($item, size);
+  $weight: map-get($item, weight);
+  $line-height: map-get($item, line-height);
+  $font: map-get($item, font);
+
+  font-size: calc(#{$size} / #{$base-font-size} * 1rem);
+  font-weight: $weight;
+  line-height: if($line-height != null, $line-height, 140%);
+
+  @if $font == 'Charter' {
+    font-family: 'Charter', serif;
+  } @else {
+    font-family: 'Titillium Web', sans-serif;
+  }
+}
+
+@each $name, $props in $typography {
+  .ts-#{$name} {
+    @include typography($name);
+  }
+}
+
+
+// Scala di grigi e nero
+$color-scale: (
+        (
+                'neutral-20': var(--neutral--20),
+                'neutral-50': var(--neutral--50),
+                'neutral-100': var(--neutral--100),
+                'neutral-400': var(--neutral--400),
+                'neutral-500': var(--neutral--500),
+                'neutral-600': var(--neutral--600),
+                'neutral-700': var(--neutral--700),
+                'font-color': white,
+                'error': var(--rosso--500),
+                'font-dark': black,
+        )
+);
+
+// Mixin per applicare il colore al testo
+@mixin text-color($color) {
+  color: $color;
+}
+
+// Genera le classi per la scala di grigi e nero
+@each $name, $color in $color-scale {
+  .text-#{$name} {
+    @include text-color($color);
+  }
+}
+
+$font-weights: (
+        'thin': 100,
+        'light': 300,
+        'normal': 400,
+        'medium': 500,
+        'semi-bold': 600,
+        'bold': 700,
+        'extra-bold': 800,
+        'black': 900
+);
+
+@each $name, $weight in $font-weights {
+  .font-weight-#{$name} {
+    font-weight: $weight;
+  }
+}
+
+.text-paragraph {
+  font-weight: 400;
+  line-height: 166% !important;
+}
+
+.text-primary {
+  color: var(--primary-base);
+}
+
+.text-ellipsis {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.one-line {
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  &.two-line {
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  &.three-line {
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
+
+.primary-label-small,
+.primary-label {
+  font-weight: 700;
+}
+
+.white-space-break {
+  white-space: break-spaces;
+}

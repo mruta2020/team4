@@ -13,6 +13,4 @@ app.use(bodyParser.json());
 app.use("/upload", uploadRouter);
 app.use("/read", readRouter);
 
-export default router;
-
 app.listen(3000, () => console.log("Server on http://localhost:3000"));
