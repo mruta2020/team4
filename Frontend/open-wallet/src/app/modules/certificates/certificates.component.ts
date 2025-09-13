@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {LogAccessState} from '../../components/log-access-state/log-access-state';
-import {TableModule} from 'primeng/table';
-import {LogAccess} from '../../model/log-access.model';
-import {ButtonModule} from 'primeng/button';
-import {Dialog} from 'primeng/dialog';
-import {FileSelectEvent, FileUpload, FileUploadEvent} from 'primeng/fileupload';
-import {MessageService} from 'primeng/api';
-import {ToastModule} from 'primeng/toast';
-import {CertificateService} from "../../services/certificate.service";
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { LogAccessState } from '../../components/log-access-state/log-access-state';
+import { TableModule } from 'primeng/table';
+import { LogAccess } from '../../model/log-access.model';
+import { ButtonModule } from 'primeng/button';
+import { Dialog } from 'primeng/dialog';
+import { FileSelectEvent, FileUpload, FileUploadEvent } from 'primeng/fileupload';
+import { MenuItem, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { CertificateService } from "../../services/certificate.service";
+import { Router } from '@angular/router';
 import { Certificate } from '../../model/certificate.model';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 
 @Component({
@@ -22,7 +23,8 @@ import { Certificate } from '../../model/certificate.model';
     Dialog,
     FileUpload,
     ToastModule,
-    LogAccessState
+    LogAccessState,
+    SplitButtonModule
   ],
   standalone: true,
   providers: [MessageService,]
@@ -38,14 +40,35 @@ export class CertificatesComponent implements OnInit {
 
   data: LogAccess[];
 
+  items: MenuItem[];
+
+
   constructor(private messageService: MessageService,
-              public _router: Router,
-              private certificateService: CertificateService) {
+    public _router: Router,
+    private certificateService: CertificateService) {
   }
 
   ngOnInit() {
     this.certificateService.getAllCertificate().subscribe((res) => {
       this.certificates = res;
+
+      this.selectedCertificate = this.certificates[0];
+
+          this.items = [
+      {
+        label: 'Visualizza',
+        command: () => {
+          this.selectCertificate(this.selectedCertificate);
+        }
+      },
+      {
+        label: 'Scarica',
+        command: () => { }
+      },
+      { label: 'Revoca' },
+      { separator: true },
+      { label: 'Condividi'}
+    ];
     });
 
   }
@@ -75,7 +98,7 @@ export class CertificatesComponent implements OnInit {
   }
 
   public selectCertificate(cert: Certificate) {
-    console.log('cert',cert)
+    console.log('cert', cert)
   }
 
   download(id) {

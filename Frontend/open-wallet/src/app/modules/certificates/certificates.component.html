@@ -11,7 +11,7 @@
             <th>Nome certificato</th>
             <th>Nome file</th>
             <th>Stato</th>
-            <th>Azioni</th>
+            <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-cert>
@@ -24,9 +24,13 @@
                 <app-log-access-state [status]="cert.status"></app-log-access-state>
             </td>
             <td class="d-flex gap-2">
-                <p-button icon="pi pi-eye" (onClick)="selectCertificate(cert)" severity="secondary" rounded />
+                <p-splitbutton label="Azioni" [model]="items" severity="secondary" />
+
+
+                <!-- <p-button icon="pi pi-eye" (onClick)="selectCertificate(cert)" severity="secondary" rounded />
                 <p-button icon="pi pi-download" severity="info" rounded />
                 <p-button icon="pi pi-ban"  severity="danger" rounded [disabled]="cert.status === 'revoked'"/>
+                <p-button icon="pi pi-share-alt"  severity="info" rounded /> -->
             </td>
         </tr>
     </ng-template>
