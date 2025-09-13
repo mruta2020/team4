@@ -5,14 +5,17 @@ export type Detected =
     | { kind: "UNKNOWN" };
 
 export function detectFromUpload(file?: Express.Multer.File, body?: any): Detected {
-    // VC-JWT: string composed of 3 parts separated by dots
-    if (typeof body?.vcJwt === "string" && body.vcJwt.split(".").length === 3) {
-        return { kind: "VC-JWT", jwt: body.vcJwt };
-    }
-
     if (file) {
         const mime = file.mimetype?.toLowerCase() || "";
         const name = file.originalname.toLowerCase();
+
+        // VC-JWT: string composed of 3 parts separated by dots
+        if (mime === "application/json" || name.endsWith(".json")) {
+            const content = JSON.parse(file.buffer.toString("utf-8"));
+            if (typeof content?.vcJwt === "string" && content.vcJwt.split(".").length === 3) {
+                return { kind: "VC-JWT", jwt: content.vcJwt };
+            }
+        }
 
         // PKCS#7/CMS (.p7m, .p7s)
         if (

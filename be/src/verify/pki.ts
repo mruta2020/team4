@@ -10,7 +10,7 @@ export async function verifyPkcs7(der: Buffer): Promise<{ ok: boolean; reason?: 
         const signedData = new pkijs.SignedData({ schema: contentInfo.content });
 
         // Verify signature (detached, no content)
-        const verify = await signedData.verify({ signer: 0, content: new ArrayBuffer(0) /* se detached */ });
+        const verify = await signedData.verify({ signer: 0, content: new ArrayBuffer(0) });
         if (!verify) return { ok: false, reason: "bad-cms-signature" };
 
         // Subject info
