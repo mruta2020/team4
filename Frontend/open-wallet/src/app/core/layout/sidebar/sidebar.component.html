@@ -1,0 +1,6 @@
+<div class="d-flex flex-column gap-2">
+    @for (item of items; track $index) {
+    <p-button [icon]="item.icon" label="{{item.label}}" variant="text" severity="secondary" (onClick)="navigate(item.routerLink)" >
+    </p-button>
+    }
+</div>
