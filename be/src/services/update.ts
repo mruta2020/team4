@@ -10,8 +10,6 @@ import {issueCert, verifyCert} from "../chain";
 export class UpdateService {
 
     static async upload(req:any, res:any) {
-
-
         const file = req.file as Express.Multer.File | undefined;
         if (!file) return res.status(400).json({ error: "file richiesto" });
 
