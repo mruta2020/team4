@@ -11,9 +11,7 @@ import {LabelValue} from "../../components/label-value/label-value";
   selector: 'app-certificate-detail',
   imports: [
     DatePipe,
-    Accordion,
     Card,
-    NgClass,
     LabelValue
   ],
   templateUrl: './certificate-detail.html',

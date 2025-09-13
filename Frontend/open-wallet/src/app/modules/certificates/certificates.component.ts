@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { LogAccessState } from '../../components/log-access-state/log-access-state';
-import { TableModule } from 'primeng/table';
-import { LogAccess } from '../../model/log-access.model';
-import { ButtonModule } from 'primeng/button';
-import { Dialog } from 'primeng/dialog';
-import { FileSelectEvent, FileUpload, FileUploadEvent } from 'primeng/fileupload';
-import { MenuItem, MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { CertificateService } from "../../services/certificate.service";
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {TableModule} from 'primeng/table';
+import {ButtonModule} from 'primeng/button';
+import {Dialog} from 'primeng/dialog';
+import {FileSelectEvent, FileUpload, FileUploadEvent} from 'primeng/fileupload';
+import {MenuItem, MessageService} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
+import {CertificateService} from "../../services/certificate.service";
+import {LogAccessState} from "../../components/log-access-state/log-access-state";
+import {Router} from '@angular/router';
+import {LogAccess} from "../../model/log-access.model";
 import { Certificate } from '../../model/certificate.model';
 import { SplitButtonModule } from 'primeng/splitbutton';
 
@@ -24,13 +24,16 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     FileUpload,
     ToastModule,
     LogAccessState,
-    SplitButtonModule
+    SplitButtonModule,
+    ToastModule,
+    LogAccessState,
   ],
   standalone: true,
   providers: [MessageService,]
 })
 export class CertificatesComponent implements OnInit {
 
+  alias: string;
   certificates = [];
   visible: boolean = false;
   file: File;
@@ -49,10 +52,52 @@ export class CertificatesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._init();
+  }
+
+  public showDialog() {
+    this.visible = true;
+  }
+
+  onUpload(event: FileSelectEvent) {
+    this.file = event.files[0];
+  }
+
+  onUploadFile() {
+
+    console.log(this.file);
+
+    this.certificateService.uploadFile(this.file, this.alias).subscribe((res) => {
+
+      this.messageService.add({
+        severity: 'success', // success, info, warn, error
+        summary: 'Success',
+        detail: 'File caricato con successo'
+      });
+
+      this._init();
+
+      this.visible = false;
+      console.log(res);
+    });
+  }
+
+  public selectCertificate(cert: Certificate) {
+    console.log('cert', cert)
+  }
+
+  download(id) {
+    this._router.navigateByUrl('/home/certificate/' + id + '/download')
+  }
+
+  showDetail(id) {
+    this._router.navigateByUrl('/home/certificate/' + id)
+  }
+
+  private _init(){
     this.certificateService.getAllCertificate().subscribe((res) => {
       this.certificates = res;
-
-      this.selectedCertificate = this.certificates[0];
+          this.selectedCertificate = this.certificates[0];
 
           this.items = [
       {
@@ -70,42 +115,5 @@ export class CertificatesComponent implements OnInit {
       { label: 'Condividi'}
     ];
     });
-
-  }
-
-  public showDialog() {
-    this.visible = true;
-  }
-
-  onUpload(event: FileSelectEvent) {
-    console.log(event);
-    this.file = event.files[0];
-  }
-
-  onUploadFile() {
-
-    console.log("onUploadFile")
-    this.certificateService.uploadFile(this.file).subscribe((res) => {
-
-      this.messageService.add({
-        severity: 'success', // success, info, warn, error
-        summary: 'Success',
-        detail: 'File caricato con successo'
-      });
-
-      console.log(res);
-    });
-  }
-
-  public selectCertificate(cert: Certificate) {
-    console.log('cert', cert)
-  }
-
-  download(id) {
-    this._router.navigateByUrl('/home/certificate/' + id + '/download')
-  }
-
-  showDetail(id) {
-    this._router.navigateByUrl('/home/certificate/' + id)
   }
 }

@@ -18,10 +18,11 @@
         <tr [pSelectableRow]="cert">
             <td>{{ cert.blockNumber }}</td>
             <td>{{ cert.certId }}</td>
-            <td>{{ cert.alias}}</td>
+            <td>{{ cert.alias }}</td>
             <td>{{ cert.fileName }}</td>
             <td>
-                <app-log-access-state [status]="cert.status"></app-log-access-state>
+                <app-log-access-state [type]="cert.status"
+                                      [label]="('CERTIFICATES.' +  cert.status) | translate"></app-log-access-state>
             </td>
             <td class="d-flex gap-2">
                 <p-splitbutton label="Azioni" [model]="items" severity="secondary" />
@@ -37,15 +38,31 @@
 </p-table>
 
 <p-dialog header="Aggiungi certificazione" [(visible)]="visible" [modal]="true" [style]="{ width: '30vw' }"
-    [draggable]="false" [resizable]="false">
+          [draggable]="false" [resizable]="false">
 
     <div class="flex flex-wrap gap-6 items-center justify-between">
         <div class="row">
-            <p-fileupload #fu mode="basic" chooseLabel="Scegli il certificato" chooseIcon="pi pi-upload" name="demo[]"
-                accept=".pdf,application/pdf" maxFileSize="1000000" (onSelect)="onUpload($event)" />
+            <div class="col-12 pb-4">
+                <p-floatlabel class="w-100" variant="in">
+                    <input pInputText id="alias"
+                           class="w-100"
+                           required
+                           [(ngModel)]="alias" autocomplete="off"/>
+                    <label for="alias">Nome certificato</label>
+                </p-floatlabel>
+            </div>
+            <div class="col-12">
+                <p-fileupload #fu mode="basic"
+                              chooseLabel="Scegli il certificato" chooseIcon="pi pi-upload"
+                              name="demo[]"
+                              accept=".pdf,application/pdf"
+                              maxFileSize="1000000"
+                              (onSelect)="onUpload($event)"/>
+
+            </div>
         </div>
         <div class="pt-4 d-flex justify-content-end">
-            <p-button label="Carica" [disabled]="!file" (onClick)="onUploadFile()" severity="primary" />
+            <p-button label="Carica" [disabled]="!file || !alias" (onClick)="onUploadFile()" severity="success"/>
         </div>
     </div>
 </p-dialog>

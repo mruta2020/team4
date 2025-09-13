@@ -22,14 +22,16 @@ export class CertificateService {
     return this.http.get(`${this.url}/certificates` + id + '/download');
   }
 
-  uploadFile(file: File) {
+  uploadFile(file: File, alias: string) {
+
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('alias', alias);
 
     return this.http.post(`${this.url}/certificates`, formData);
   }
 
-  getAllCertificate(){
+  getAllCertificate() {
     return this.http.get<Certificate[]>(`${this.url}/certificates`);
   }
 

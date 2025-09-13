@@ -13,5 +13,6 @@ import {NgClass} from "@angular/common";
 })
 export class LogAccessState {
 
-  status = input<string>();
+  type = input<string>();
+  label = input<string>();
 }
