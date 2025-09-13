@@ -1,11 +1,11 @@
-import {listAll, verifyCert} from "../chain";
+import {listAll} from "../chain";
 import path from "path";
 import fs from "fs";
 
 
 export class ReadService {
 
-    static async read(req: any, res: any) {
+    static async readList(req: any, res: any) {
         const rows = listAll()
             .map(r => ({
                 certId: r.certId,
