@@ -5,6 +5,7 @@ import uploadRouter from "./controllers/upload/upload";
 import readRouter from "./controllers/read/read";
 import cors from "cors";
 import verifyRouter from "./controllers/verifyHash/verify";
+import {auth} from "./middleware/auth";
 
 const router = Router();
 
@@ -15,9 +16,9 @@ app.use(cors({
   origin: "http://localhost:4200"
 }));
 
-app.use("/certificates/upload", uploadRouter);
-app.use("/certificates", readRouter);
-app.use("/verify-hash", verifyRouter);
+app.use("/certificates/upload",auth, uploadRouter);
+app.use("/certificates",auth, readRouter);
+app.use("/verify-hash",auth, verifyRouter);
 
 app.listen(3000, () => console.log("Server on http://localhost:3000"));
 
