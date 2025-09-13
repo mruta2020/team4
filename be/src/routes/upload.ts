@@ -2,25 +2,27 @@ import { Router } from "express";
 import multer from "multer";
 import { sha256Hex } from "../hashUtils";
 import { verifyCert } from "../chain";
+import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post("/", upload.single("file"), (req, res) => {
     try {
-        const { certId } = req.body;
-        if (!req.file || !certId) {
-            return res.status(400).json({ error: "certId e file richiesti" });
+
+        if (!req.file) {
+            return res.status(400).json({ error: "file richiesto" });
         }
+
+        const certId = uuidv4();
         const fileBuffer = req.file.buffer;
         const hash = sha256Hex(fileBuffer.toString("base64"));
-        const { txHash, record } = verifyCert(certId, hash);
+       // const { txHash, record } = verifyCert(certId, hash);
 
         res.json({
             message: "File registrato su blockchain",
-            txHash,
             hash,
-            cert: record,
+            cert: certId,
             fileName: req.file.originalname,
             size: req.file.size
         });

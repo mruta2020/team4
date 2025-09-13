@@ -1,8 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
-import ingestRouter from "./routes/ingest";
-import verifyFileRouter from "./routes/verify-file";
 import { revokeCert, listAllCerts } from "./chain";
+import uploadRouter from "./routes/upload";
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,6 +16,8 @@ app.post("/revoke", (req, res) => {
         res.status(500).json({ error: e.message });
     }
 });
+
+app.use("/upload", uploadRouter);
 
 app.get("/ledger", (_, res) => res.json(listAllCerts()));
 
