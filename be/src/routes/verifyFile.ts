@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { sha256Hex } from "../hashUtils";
+import { sha256Hex } from "../hash";
 import { verifyCert } from "../chain";
 
 const router = Router();
