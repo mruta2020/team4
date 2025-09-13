@@ -1,6 +1,12 @@
 {
-  "CERTIFICATES": {
+  "LOG_ACCESS": {
     "verified": "Verificato",
     "not-verified": "Non verificato"
+  },
+  "CERTIFICATES": {
+    "valid": "Valido",
+    "mismatch": "File alterato",
+    "not-found": "Non trovato",
+    "revoked": "Revocato"
   }
 }

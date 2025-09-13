@@ -19,7 +19,7 @@
             <td>
                 <app-log-access-state
                         [type]="log.status"
-                        [label]="('CERTIFICATES.' + log.status) | translate"></app-log-access-state>
+                        [label]="('LOG_ACCESS.' + log.status) | translate"></app-log-access-state>
             </td>
             <td>{{ log.ip }}
                 @if (log.location) {

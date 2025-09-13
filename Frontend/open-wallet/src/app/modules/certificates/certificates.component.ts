@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {InputText} from "primeng/inputtext";
 import {FloatLabel} from "primeng/floatlabel";
 import {LogAccessState} from "../../components/log-access-state/log-access-state";
+import {TranslatePipe} from "@ngx-translate/core";
 
 
 @Component({
@@ -26,7 +27,8 @@ import {LogAccessState} from "../../components/log-access-state/log-access-state
     InputText,
     FloatLabel,
     ToastModule,
-    LogAccessState
+    LogAccessState,
+    TranslatePipe
   ],
   standalone: true,
 })
