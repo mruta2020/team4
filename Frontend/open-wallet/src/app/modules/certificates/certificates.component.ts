@@ -92,7 +92,20 @@ export class CertificatesComponent implements OnInit {
   }
 
   download(id) {
-    this._router.navigateByUrl('/home/certificate/' + id + '/download')
+    this.certificateService.downloadCertificate(id).subscribe({
+      next: (pdfBlob: Blob) => {
+        // crea un link "virtuale" per scaricare
+        const url = window.URL.createObjectURL(pdfBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `certificate-${id}.pdf`; // nome file
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('Errore nel download', err);
+      }
+    });
   }
 
   showDetail(id) {
@@ -108,12 +121,14 @@ export class CertificatesComponent implements OnInit {
       {
         label: 'Visualizza',
         command: () => {
-          this.selectCertificate(this.selectedCertificate);
+          this.showDetail(this.selectedCertificate.id);
         }
       },
       {
         label: 'Scarica',
-        command: () => { }
+        command: () => {
+          this.download(this.selectedCertificate.id);
+        }
       },
       { label: 'Revoca' },
       { separator: true },

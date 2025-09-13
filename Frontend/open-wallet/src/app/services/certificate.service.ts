@@ -15,11 +15,17 @@ export class CertificateService {
   constructor(private http: HttpClient) {}
 
   getDetail(id): Observable<any> {
-    return this.http.get(`${this.url}/certificates` + id);
+    return this.http.get(`${this.url}/certificates/` + id);
   }
 
   getDownload(id) {
-    return this.http.get(`${this.url}/certificates` + id + '/download');
+    return this.http.get(`${this.url}/certificates/` + id + '/download');
+  }
+
+  downloadCertificate(certId: string) {
+    return this.http.get(`${this.url}/certificates/${certId}/download`, {
+      responseType: 'blob', // importante per PDF/binary
+    });
   }
 
   uploadFile(file: File, alias: string) {

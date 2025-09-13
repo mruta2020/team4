@@ -17,21 +17,16 @@
     <ng-template pTemplate="body" let-cert>
         <tr [pSelectableRow]="cert">
             <td>{{ cert.blockNumber }}</td>
-            <td>{{ cert.certId }}</td>
+            <td>{{ cert.id }}</td>
             <td>{{ cert.alias }}</td>
-            <td>{{ cert.fileName }}</td>
+            <td>{{ cert.name }}</td>
             <td>
-                <app-log-access-state [type]="cert.status"
-                                      [label]="('CERTIFICATES.' +  cert.status)"></app-log-access-state>
+                <app-log-access-state [type]="cert.state"
+                                      [label]="('CERTIFICATES.' +  cert.state)"></app-log-access-state>
             </td>
             <td class="d-flex gap-2">
                 <p-splitbutton label="Azioni" [model]="items" severity="secondary" />
 
-
-                <!-- <p-button icon="pi pi-eye" (onClick)="selectCertificate(cert)" severity="secondary" rounded />
-                <p-button icon="pi pi-download" severity="info" rounded />
-                <p-button icon="pi pi-ban"  severity="danger" rounded [disabled]="cert.status === 'revoked'"/>
-                <p-button icon="pi pi-share-alt"  severity="info" rounded /> -->
             </td>
         </tr>
     </ng-template>
