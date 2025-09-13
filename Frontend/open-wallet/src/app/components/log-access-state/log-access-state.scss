@@ -6,22 +6,22 @@
   padding-inline: 0.5rem;
 }
 
-.info {
+.info, .not-found {
   background: var(--app-info-bg);
   color: var(--app-info);
 }
 
-.verified {
+.verified, .valid {
   background: var(--app-success-bg);
   color: var(--app-success);
 }
 
-.not-verified {
+.not-verified, .revoked {
   background: var(--app-error-bg);
   color: var(--app-error);
 }
 
-.pending {
+.pending, .mismatch {
   background: var(--app-warning-bg);
   color: var(--app-warning);
 }

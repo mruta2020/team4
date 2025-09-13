@@ -21,7 +21,8 @@ import {CertificateService} from "../../services/certificate.service";
     ButtonModule,
     Dialog,
     FileUpload,
-    ToastModule
+    ToastModule,
+    LogAccessState
   ],
   standalone: true,
 })
@@ -36,9 +37,7 @@ export class CertificatesComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.certificateService.getAllCertificate().subscribe((res) => {
-      console.log(res);
       this.certificates = res;
     });
 
