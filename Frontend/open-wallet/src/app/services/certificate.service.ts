@@ -18,11 +18,6 @@ export class CertificateService {
     return this.http.get(`${this.url}/certificates` + id);
   }
 
-
-  getList(): Observable<any> {
-    return this.http.get(`${this.url}/certificates`);
-  }
-
   getDownload(id) {
     return this.http.get(`${this.url}/certificates` + id + '/download');
   }

@@ -13,6 +13,7 @@ import {LogAccessState} from "../../components/log-access-state/log-access-state
 import {TranslatePipe} from "@ngx-translate/core";
 import {Router} from '@angular/router';
 import {LogAccess} from "../../model/log-access.model";
+import { Certificate } from '../../model/certificate.model';
 
 
 @Component({
@@ -42,7 +43,11 @@ export class CertificatesComponent implements OnInit {
   visible: boolean = false;
   file: File;
 
+  selectedCertificate!: Certificate;
+  metaKey: boolean = true;
+
   data: LogAccess[];
+
   constructor(private messageService: MessageService,
               public _router: Router,
               private certificateService: CertificateService) {
@@ -80,7 +85,10 @@ export class CertificatesComponent implements OnInit {
 
       console.log(res);
     });
+  }
 
+  public selectCertificate(cert: Certificate) {
+    console.log('cert',cert)
   }
 
   download(id) {
