@@ -32,7 +32,8 @@ export class UpdateService {
 
         // 4) "Invio" alla fake chain (issue)
         const certId = uuidv4();
-        const { txHash, blockNumber } = issueCert(certId, contentHash, file.originalname);
+        const ownerId = "anonymous" //from spid token
+        const { txHash, blockNumber } = issueCert(certId, contentHash, file.originalname,ownerId);
 
         // 5) Salva file su disco
         const uploadsDir = path.join(__dirname, "../../uploads");
