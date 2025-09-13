@@ -8,7 +8,8 @@ export class VerifyService {
         }
         const normalized = this.normalizeHex(hash);
         const r = verifyCert(certId, normalized); // 'valid' | 'revoked' | 'mismatch' | 'not-found'
-        res.json({ certId, hash: normalized, ledgerStatus: r.state });
+
+        return { certId, hash: normalized, ledgerStatus: r.state };
     }
 
     private static normalizeHex(h: any) {
