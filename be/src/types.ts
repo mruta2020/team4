@@ -29,3 +29,13 @@ export type SignatureAux = {
     originalContent?: Buffer;
     jwksJson?: any;
 };
+export type LedgerState = "not-found" | "valid" | "revoked" | "mismatch";
+
+export type ChainRecord = {
+    certId: string;
+    hash: string;           // hash del contenuto (bytes del PDF)
+    revoked: boolean;
+    issuedAt: number;       // timestamp
+    txHash: string;         // finto
+    blockNumber: number;    // finto
+};
