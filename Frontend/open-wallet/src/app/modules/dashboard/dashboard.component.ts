@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {TableModule} from "primeng/table";
 import {LogAccess} from "../../model/log-access.model";
-import {MOCK_LOGS_ACCESS} from "../../mock/certificate.mock";
 import {DatePipe, NgClass} from "@angular/common";
 import {Chip} from "primeng/chip";
 import {LogAccessState} from "../../components/log-access-state/log-access-state";
+import {MOCK_LOGS_ACCESS} from "../../mock/log-access";
 
 @Component({
   selector: 'app-dashboard',
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     this.data = MOCK_LOGS_ACCESS.splice(0, 5);
+
   }
 
 }

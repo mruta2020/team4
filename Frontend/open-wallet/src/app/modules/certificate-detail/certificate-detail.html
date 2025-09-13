@@ -1,0 +1,37 @@
+<h1 class="pb-4">Dettaglio certificato</h1>
+
+<p-card>
+    <div class="p-grid p-mb-3">
+
+        <div class="p-col-12 pb-4">
+            <h5>Informazioni Generali</h5>
+            <div class="d-flex gap-4">
+                <app-label-value [label]="'Nome'" [value]="certificate.name"></app-label-value>
+                <app-label-value [label]="'Stato'" [value]="certificate.state"></app-label-value>
+                <app-label-value [label]="'Emittente'" [value]="certificate.issuer.name"></app-label-value>
+                <app-label-value [label]="'Data Emissione'"
+                                 [value]="certificate.issueDate | date:'dd/MM/yyyy'"></app-label-value>
+            </div>
+        </div>
+
+        <div class="p-col-12 pb-4">
+            <h5>Dettagli Tecnici</h5>
+            <div class="d-flex gap-4">
+                <app-label-value [label]="'Algoritmo'" [value]="certificate.algorithm"></app-label-value>
+                <app-label-value [label]="'Versione'" [value]="certificate.version"></app-label-value>
+                <app-label-value [label]="'Fingerprint'" [value]="certificate.fingerprint"></app-label-value>
+            </div>
+        </div>
+
+        <div class="p-col-12 pb-4">
+            <h5>Stato di Verifica</h5>
+            <div class="d-flex gap-4">
+                <app-label-value [label]="'Stato verifica'" [value]="certificate.algorithm"></app-label-value>
+                <app-label-value [label]="'Data verifica'"
+                                 [value]="certificate.verificationDate | date:'dd/MM/yyyy'"></app-label-value>
+            </div>
+        </div>
+
+    </div>
+
+</p-card>
