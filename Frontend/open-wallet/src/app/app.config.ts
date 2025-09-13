@@ -7,6 +7,7 @@ import { providePrimeNG } from 'primeng/config';
 import Material from '@primeuix/themes/material';
 import { provideHttpClient } from '@angular/common/http';
 import MyPreset from './themes/preset';
+import {MessageService} from "primeng/api";
 
 
 export const appConfig: ApplicationConfig = {
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
           darkModeSelector: false || 'none'
         }
       }
-    })
+    }),
+    MessageService
   ]
 };

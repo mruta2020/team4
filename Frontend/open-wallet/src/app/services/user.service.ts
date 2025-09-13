@@ -12,17 +12,23 @@ export class UserService {
   private _currentUser = signal<User>(undefined);
 
   constructor() {
+
+    const localUser = localStorage.getItem("user");
+    if (localUser) {
+      this._currentUser.set(JSON.parse(localUser));
+    }
+
   }
 
   get currentUser() {
-    return this._currentUser;
+    return this._currentUser();
   }
-
 
   onLogin(type: UserType): Observable<User> {
     return of(USER_MOCK.find(item => item.type == type)).pipe(
       map((user) => {
         this._currentUser.set(user);
+        localStorage.setItem("user", JSON.stringify(this._currentUser()));
         return user;
       })
     );

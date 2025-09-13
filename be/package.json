@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/multer": "^2.0.0",
     "@types/node": "^24.3.3",
@@ -20,6 +21,7 @@
   "dependencies": {
     "asn1js": "^3.0.6",
     "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
     "ethers": "^6.15.0",
     "express": "^5.1.0",
     "jose": "^6.1.0",

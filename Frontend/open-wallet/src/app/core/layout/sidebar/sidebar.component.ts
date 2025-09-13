@@ -53,6 +53,7 @@ export class SidebarComponent implements OnInit {
         key: '2',
         label: 'Accessi',
         icon: 'pi pi-users',
+        routerLink: '/home/logAccess'
       },
       {
         key: '3',
