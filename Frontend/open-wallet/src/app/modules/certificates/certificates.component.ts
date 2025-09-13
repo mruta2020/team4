@@ -9,6 +9,7 @@ import {CertificateService} from "../../services/certificate.service";
 import {FormsModule} from "@angular/forms";
 import {InputText} from "primeng/inputtext";
 import {FloatLabel} from "primeng/floatlabel";
+import {LogAccessState} from "../../components/log-access-state/log-access-state";
 
 
 @Component({
@@ -23,7 +24,9 @@ import {FloatLabel} from "primeng/floatlabel";
     ToastModule,
     FormsModule,
     InputText,
-    FloatLabel
+    FloatLabel,
+    ToastModule,
+    LogAccessState
   ],
   standalone: true,
 })
@@ -40,10 +43,7 @@ export class CertificatesComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.file);
-
     this.certificateService.getAllCertificate().subscribe((res) => {
-      console.log(res);
       this.certificates = res;
     });
 

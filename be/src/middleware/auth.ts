@@ -1,18 +1,20 @@
 import type { Request, Response, NextFunction } from "express";
-
-const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import {JWT_SECRET} from "../config";
 
 export function auth(req: Request, res: Response, next: NextFunction) {
-    const auth = req.header("authorization") || "";
-    const m = auth.match(/^Bearer\s+(.+)$/i);
+    const m = (req.header("authorization") || "").match(/^Bearer\s+(.+)$/i);
     const token = m?.[1];
+    if (!token) return res.status(401).json({ error: "missing token" });
 
-    if (!token) {
-        return res.status(401).json({ error: "missing token" });
-    }
-    if (token !== JWT) {
-        return res.status(403).json({ error: "invalid token" });
-    }
+    try {
+        const payload = jwt.verify(token, JWT_SECRET ) as JwtPayload & {
+            id?: number; email?: string;
+        };
 
-    next();
+        (req as any).user = { id: payload.id, email: payload.email };
+        return next();
+    } catch (e: any) {
+        return res.status(401).json({ error: "invalid token", detail: e.message });
+    }
 }
