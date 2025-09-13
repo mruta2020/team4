@@ -7,6 +7,7 @@ export function hashString(input: string): string {
     return hash.digest('hex');
 }
 
-export function sha256Hex(input: string) {
-    return keccak256(toUtf8Bytes(input));
+export function sha256Hex(data: Buffer | string) {
+    const buf = Buffer.isBuffer(data) ? data : Buffer.from(data, "utf8");
+    return "0x" + createHash("sha256").update(buf).digest("hex");
 }

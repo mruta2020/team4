@@ -1,17 +1,18 @@
 import { Router } from "express";
 import multer from "multer";
-import { sha256Hex } from "../hash";
-import { verifyCert } from "../chain";
+import { sha256Hex } from "../../hash";
+import { verifyCert } from "../../chain";
 import { v4 as uuidv4 } from 'uuid';
 import path from "path";
 import fs from "fs";
-import {detectFromFile} from "../detect";
+import {detectFromFile} from "../../detect";
+import {SignatureService} from "../../services/signature"
 
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 
-router.post("/", upload.single("file"), (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
     try {
 
         if (!req.file) {
@@ -20,10 +21,12 @@ router.post("/", upload.single("file"), (req, res) => {
         const certId = uuidv4();
         const fileBuffer = req.file.buffer;
         const hash = sha256Hex(fileBuffer.toString("base64"));
-       // const { txHash, record } = verifyCert(certId, hash);
-        const a = detectFromFile(req.file);
-        console.log(a);
 
+        const a = detectFromFile(req.file);
+
+        const signatureService = await SignatureService.verifySignature(a)
+
+        console.log(signatureService);
         const uploadsDir = path.join(__dirname, "../uploads");
 
         if (!fs.existsSync(uploadsDir)) {

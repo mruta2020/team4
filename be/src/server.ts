@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { revokeCert, listAllCerts } from "./chain";
-import uploadRouter from "./routes/upload";
+import uploadRouter from "./controllers/upload/upload";
 
 const app = express();
 app.use(bodyParser.json());
