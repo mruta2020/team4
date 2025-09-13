@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 /**
  * PrimeNG Module
@@ -10,7 +10,9 @@ import {PanelMenu} from 'primeng/panelmenu';
 import {TooltipModule} from 'primeng/tooltip';
 import {MenuModule} from 'primeng/menu';
 import {MenuItem} from 'primeng/api';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import { UserService } from '../../../services/user.service';
+import { User } from '../../../model/user.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,12 +32,18 @@ export class SidebarComponent implements OnInit {
 
   public selectedItem: any;
 
+  private user: User;
+
   constructor(
-    private _router: Router
+    private _router: Router,
+    private userService: UserService
   ) {
   }
 
-  ngOnInit() {
+ngOnInit() {
+  this.user = this.userService.currentUser();
+
+  if (this.user?.type === 'ente') {
     this.items = [
       {
         key: '0',
@@ -50,11 +58,6 @@ export class SidebarComponent implements OnInit {
         routerLink: '/home/certificates'
       },
       {
-        key: '2',
-        label: 'Accessi',
-        icon: 'pi pi-users',
-      },
-      {
         key: '3',
         label: 'Impostazioni',
         icon: 'pi pi-cog'
@@ -65,7 +68,41 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-sign-out'
       }
     ];
+  } else if (this.user?.type === 'user') {
+    this.items = [
+      {
+        key: '0',
+        label: 'Dashboard',
+        icon: 'pi pi-chart-pie',
+        routerLink: '/home/dashboard'
+      },
+      {
+        key: '1',
+        label: 'Le mie Certificazioni',
+        icon: 'pi pi-verified',
+        routerLink: '/home/certificates'
+      },
+      {
+        key: '2',
+        label: 'Timeline Accessi',
+        icon: 'pi pi-clock',
+        routerLink: '/home/access-log'
+      },
+      {
+        key: '3',
+        label: 'Profilo',
+        icon: 'pi pi-user',
+        routerLink: '/home/profile'
+      },
+      {
+        key: '4',
+        label: 'Sign out',
+        icon: 'pi pi-sign-out'
+      }
+    ];
   }
+}
+
 
   toggleAll() {
     this.expanded = !this.areAllItemsExpanded();
