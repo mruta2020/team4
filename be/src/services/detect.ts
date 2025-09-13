@@ -1,4 +1,3 @@
-import type { Express } from "express";
 import { Detected } from "./types";
 
 // Heuristics PAdES solo per bloccare PDF firmati in questa versione

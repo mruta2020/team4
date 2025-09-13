@@ -1,4 +1,4 @@
-import {listAll} from "../chain";
+import {listAll} from "./chain";
 import path from "path";
 import fs from "fs";
 
