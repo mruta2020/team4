@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [CommonModule, ButtonModule, DrawerModule, PanelMenu, MenuModule,TooltipModule]
+  imports: [CommonModule, ButtonModule, DrawerModule, MenuModule,TooltipModule]
 })
 export class SidebarComponent implements OnInit {
 
@@ -46,6 +46,7 @@ export class SidebarComponent implements OnInit {
         key: '1',
         label: 'Certificazioni',
         icon: 'pi pi-verified',
+        routerLink: '/certificates'
       },
       {
         key: '2',
