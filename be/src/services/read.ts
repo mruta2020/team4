@@ -2,6 +2,7 @@ import {listAll} from "./chain";
 import path from "path";
 import fs from "fs";
 import {VerifyService} from "./verify";
+import {CertificateResponse} from "../types";
 
 
 export class ReadService {
@@ -32,20 +33,24 @@ export class ReadService {
         const filePath = path.join(uploadsDir, `${certId}${ext}`);
         const hasFile = fs.existsSync(filePath);
         const size = hasFile ? fs.statSync(filePath).size : null;
-
         const verify = await VerifyService.verifyHash({body: {certId, hash: rec.hash}}, res);
 
-        res.json({
-            certId: rec.certId,
-            fileName: rec.fileName ?? (hasFile ? `${certId}${ext}` : null),
-            hash: rec.hash,
-            status: verify?.ledgerStatus,
-            issuedAt: rec.issuedAt,
-            txHash: rec.txHash,
-            blockNumber: rec.blockNumber,
-            hasFile,
-            size
-        });
+        const certificateResponse : CertificateResponse = {
+            id: rec.certId,
+            name: rec.fileName || "",
+            state: verify?.ledgerStatus,
+            issuer: {
+                id: "1",
+                name: "ID Cert"
+            },
+            issueDate: new Date(rec.issuedAt),
+            algorithm: "SHA-256",
+            version: "1.0",
+            fingerprint: rec.hash,
+            isVerified: !rec.revoked,
+            verificationDate: new Date(rec.issuedAt)
+        }
+        return (res.json({ ...certificateResponse, size, hasFile }));
     }
 
     static async downloadById(req: any, res: any) {

@@ -31,3 +31,20 @@ export type ChainRecord = {
     fileName?: string;
     ownerId?: string;
 };
+export type CertificateResponse = {
+    id: string;
+    name: string;
+    state: string;
+    issuer: Issuer;
+    issueDate: Date;
+    algorithm: string;
+    version: string;
+    fingerprint: string;
+    isVerified: boolean;
+    verificationDate: Date;
+}
+
+export type Issuer = {
+    id: string;
+    name: string;
+}

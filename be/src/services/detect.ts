@@ -1,4 +1,4 @@
-import { Detected } from "./types";
+import { Detected } from "../types";
 
 // Heuristics PAdES solo per bloccare PDF firmati in questa versione
 function pdfMaybeSigned(buf: Buffer): boolean {

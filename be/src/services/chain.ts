@@ -1,4 +1,4 @@
-import {ChainRecord, LedgerState} from "./types";
+import {ChainRecord, LedgerState} from "../types";
 
 
 const db: ChainRecord[] = [];

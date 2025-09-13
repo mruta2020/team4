@@ -13,7 +13,9 @@ import { MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../model/user.model';
-
+export interface AppMenuItem extends MenuItem {
+  key?: string;
+}
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -25,7 +27,7 @@ export class SidebarComponent implements OnInit {
 
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
-  public items: MenuItem[] = [];
+  public items: AppMenuItem[] = [];
 
   public visible: boolean = false;
   public expanded: boolean = false;
@@ -33,6 +35,9 @@ export class SidebarComponent implements OnInit {
   public selectedItem: any;
 
   private user: User;
+
+  activeKey: string | null = null;
+
 
   constructor(
     private _router: Router,
@@ -133,4 +138,12 @@ export class SidebarComponent implements OnInit {
     this._router.navigateByUrl(link);
   }
 
+
+  handleClick(item: any) {
+  if (item.command) {
+    item.command();
+  } else if (item.routerLink) {
+    this.navigate(item.routerLink);
+    this.activeKey = item.key;   // aggiorno attivo
+  }}
 }
