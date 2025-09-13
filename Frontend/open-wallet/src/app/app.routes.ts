@@ -3,6 +3,7 @@ import {CertificateDetail} from "./modules/certificate-detail/certificate-detail
 import {Login} from "./modules/login/login";
 import {LayoutComponent} from "./core/layout/layout/layout.component";
 import {authGuard} from "./guard/auth.guard";
+import { CertificatesComponent } from './modules/certificates/certificates.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,10 @@ export const routes: Routes = [
     path: 'home',
     canActivate: [authGuard],
     component: LayoutComponent
+  },
+  {
+    path: 'certificates',
+    component: CertificatesComponent
   },
   {
     path: '',
