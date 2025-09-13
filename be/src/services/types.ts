@@ -1,14 +1,3 @@
-export type CertRecord = {
-    certId: string;
-    hash: string;
-    revoked: boolean;
-    issuedAt: number;
-}
-export type IssueResult = {
-    txHash: string;
-    record: CertRecord;
-}
-
 export type DetectedKind = "VC-JWT" | "PKI-P7M" | "PKI-CERT" | "PDF" | "UNKNOWN";
 
 export type Detected =
@@ -29,13 +18,16 @@ export type SignatureAux = {
     originalContent?: Buffer;
     jwksJson?: any;
 };
+
 export type LedgerState = "not-found" | "valid" | "revoked" | "mismatch";
 
 export type ChainRecord = {
     certId: string;
-    hash: string;           // hash del contenuto (bytes del PDF)
+    hash: string;
     revoked: boolean;
-    issuedAt: number;       // timestamp
-    txHash: string;         // finto
-    blockNumber: number;    // finto
+    issuedAt: number;
+    txHash: string;
+    blockNumber: number;
+    fileName?: string;
+    ownerId?: string;
 };

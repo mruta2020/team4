@@ -1,15 +1,5 @@
-export type LedgerState = "not-found" | "valid" | "revoked" | "mismatch";
+import {ChainRecord, LedgerState} from "./types";
 
-export type ChainRecord = {
-    certId: string;
-    hash: string;
-    revoked: boolean;
-    issuedAt: number;
-    txHash: string;
-    blockNumber: number;
-    fileName?: string;
-    ownerId?: string;
-};
 
 const db: ChainRecord[] = [];
 let height = 1;
