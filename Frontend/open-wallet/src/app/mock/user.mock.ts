@@ -2,13 +2,14 @@ import {User} from "../model/user.model";
 
 export const USER_MOCK: User[] = [
   {
-    type: 'ente',
-    legalName: 'UNIBO',
-    id: 'C001'
+    type: 'user',
+    name: 'Giovanni',
+    surname: 'Rossi',
+    id: '1'
   },
   {
-    type: 'user',
+    type: 'ente',
     legalName: 'UNIBO',
-    id: 'C001'
+    id: '2'
   }
 ];

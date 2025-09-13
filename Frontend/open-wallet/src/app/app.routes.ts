@@ -5,6 +5,7 @@ import {LayoutComponent} from "./core/layout/layout/layout.component";
 import {authGuard} from "./guard/auth.guard";
 import {CertificatesComponent} from './modules/certificates/certificates.component';
 import {DashboardComponent} from "./modules/dashboard/dashboard.component";
+import {LogAccessComponent} from "./modules/log-access/log-access";
 
 export const routes: Routes = [
   {
@@ -22,8 +23,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
     component: LayoutComponent,
     children: [
-      {path: '', component: DashboardComponent},
-      {path: 'dashboard', component: DashboardComponent},
       {
         path: 'certificate/:id',
         component: CertificateDetail
@@ -32,6 +31,15 @@ export const routes: Routes = [
         path: 'certificates',
         component: CertificatesComponent
       },
+      {
+        path: 'logAccess',
+        component: LogAccessComponent
+      },
+      {
+        path: '',
+        redirectTo: 'certificates',
+        pathMatch: 'full'
+      }
     ]
   },
   {
