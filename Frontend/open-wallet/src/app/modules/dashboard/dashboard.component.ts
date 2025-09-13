@@ -14,6 +14,7 @@ import {MOCK_LOGS_ACCESS} from "../../mock/log-access";
     DatePipe,
     LogAccessState
   ],
+  standalone: true,
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {

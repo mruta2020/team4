@@ -14,6 +14,11 @@ export class UserService {
   constructor() {
   }
 
+  get currentUser() {
+    return this._currentUser;
+  }
+
+
   onLogin(type: UserType): Observable<User> {
     return of(USER_MOCK.find(item => item.type == type)).pipe(
       map((user) => {
