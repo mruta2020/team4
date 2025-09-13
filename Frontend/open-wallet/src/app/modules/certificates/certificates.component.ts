@@ -12,6 +12,7 @@ import {FloatLabel} from "primeng/floatlabel";
 import {LogAccessState} from "../../components/log-access-state/log-access-state";
 import {TranslatePipe} from "@ngx-translate/core";
 import {Router} from '@angular/router';
+import {LogAccess} from "../../model/log-access.model";
 
 
 @Component({
