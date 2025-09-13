@@ -1,24 +1,23 @@
 import express from "express";
 import bodyParser from "body-parser";
-import issueRouter from "./routes/issue";
-import verifyRouter from "./routes/verify";
-import revokeRouter from "./routes/revoke";
-import uploadRouter from "./routes/upload";
-import { listAllCerts } from "./chain";
+import ingestRouter from "./routes/ingest";
+import verifyFileRouter from "./routes/verify-file";
+import { revokeCert, listAllCerts } from "./chain";
 
 const app = express();
 app.use(bodyParser.json());
 
-app.use("/issue", issueRouter);
-app.use("/verify", verifyRouter);
-app.use("/revoke", revokeRouter);
-app.use("/upload", uploadRouter);
-
-
-app.get("/ledger", (req, res) => {
-    res.json(listAllCerts());
+app.post("/revoke", (req, res) => {
+    try {
+        const { certId } = req.body;
+        if (!certId) return res.status(400).json({ error: "certId is required" });
+        const r = revokeCert(certId);
+        res.json(r);
+    } catch (e: any) {
+        res.status(500).json({ error: e.message });
+    }
 });
 
-app.listen(3000, () => {
-    console.log("chain server active on http://localhost:3000");
-});
+app.get("/ledger", (_, res) => res.json(listAllCerts()));
+
+app.listen(3000, () => console.log("Server on http://localhost:3000"));
