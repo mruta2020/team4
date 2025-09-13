@@ -12,17 +12,16 @@ router.post("/", upload.single("file"), (req, res) => {
         if (!req.file || !certId) {
             return res.status(400).json({ error: "certId e file richiesti" });
         }
+
         const fileBuffer = req.file.buffer;
         const hash = sha256Hex(fileBuffer.toString("base64"));
-        const { txHash, record } = verifyCert(certId, hash);
+        const result = verifyCert(certId, hash);
 
         res.json({
-            message: "File registrato su blockchain",
-            txHash,
-            hash,
-            cert: record,
+            certId,
             fileName: req.file.originalname,
-            size: req.file.size
+            hash,
+            ...result
         });
     } catch (e: any) {
         res.status(500).json({ error: e.message });
