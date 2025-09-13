@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Certificate} from "../../model/certificate.model";
 import {CertificateService} from "../../services/certificate.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DatePipe, NgClass} from "@angular/common";
 import {Accordion} from "primeng/accordion";
 import {Card} from "primeng/card";
