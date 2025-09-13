@@ -23,8 +23,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
     component: LayoutComponent,
     children: [
-      {path: '', component: DashboardComponent},
-      {path: 'dashboard', component: DashboardComponent},
       {
         path: 'certificate/:id',
         component: CertificateDetail
@@ -36,6 +34,11 @@ export const routes: Routes = [
       {
         path: 'logAccess',
         component: LogAccessComponent
+      },
+      {
+        path: '',
+        redirectTo: 'certificates',
+        pathMatch: 'full'
       }
     ]
   },
