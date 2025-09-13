@@ -1,10 +1,10 @@
 import {v4 as uuidv4} from "uuid";
-import {sha256Hex} from "../hash";
-import {detectFromFile} from "../detect";
+import {sha256Hex} from "./hash";
+import {detectFromFile} from "./detect";
 import {SignatureService} from "./signature";
 import path from "path";
 import fs from "fs";
-import {issueCert, verifyCert} from "../chain";
+import {issueCert, verifyCert} from "./chain";
 
 
 export class UpdateService {

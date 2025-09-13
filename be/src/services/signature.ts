@@ -1,4 +1,4 @@
-import { Detected, SignatureAux, VerificationOutcome } from "../types";
+import { Detected, SignatureAux, VerificationOutcome } from "./types";
 
 export const SignatureService = {
     async verifySignature(d: Detected, _aux: SignatureAux = {}): Promise<VerificationOutcome> {

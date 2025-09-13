@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import uploadRouter from "./controllers/upload/upload";
 import readRouter from "./controllers/read/read";
 import cors from "cors";
+import verifyRouter from "./controllers/verifyHash/verify";
 
 const router = Router();
 
@@ -16,5 +17,7 @@ app.use(cors({
 
 app.use("/certificates/upload", uploadRouter);
 app.use("/certificates", readRouter);
+app.use("/verify-hash", verifyRouter);
 
 app.listen(3000, () => console.log("Server on http://localhost:3000"));
+

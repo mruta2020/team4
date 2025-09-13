@@ -1,15 +1,5 @@
-export type LedgerState = "not-found" | "valid" | "revoked" | "mismatch";
+import {ChainRecord, LedgerState} from "./types";
 
-export type ChainRecord = {
-    certId: string;
-    hash: string;
-    revoked: boolean;
-    issuedAt: number;
-    txHash: string;
-    blockNumber: number;
-    fileName?: string;
-    ownerId?: string;
-};
 
 const db: ChainRecord[] = [];
 let height = 1;
@@ -36,13 +26,6 @@ export function verifyCert(certId: string, hash: string): { state: LedgerState }
     if (!rec) return { state: "not-found" };
     if (rec.revoked) return { state: "revoked" };
     return rec.hash === hash ? { state: "valid" } : { state: "mismatch" };
-}
-
-export function revokeCert(certId: string) {
-    const rec = db.find(r => r.certId === certId);
-    if (!rec) throw new Error("not-found");
-    rec.revoked = true;
-    return { txHash: makeTx(), blockNumber: height++ };
 }
 
 export function listAll() { return db; }

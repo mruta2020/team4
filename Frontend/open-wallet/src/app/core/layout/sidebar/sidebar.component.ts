@@ -1,16 +1,18 @@
-import {CommonModule} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 /**
  * PrimeNG Module
  */
-import {ButtonModule} from 'primeng/button';
-import {Drawer, DrawerModule} from 'primeng/drawer';
-import {PanelMenu} from 'primeng/panelmenu';
-import {TooltipModule} from 'primeng/tooltip';
-import {MenuModule} from 'primeng/menu';
-import {MenuItem} from 'primeng/api';
-import {Router} from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { Drawer, DrawerModule } from 'primeng/drawer';
+import { PanelMenu } from 'primeng/panelmenu';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
+import { User } from '../../../model/user.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,43 +32,80 @@ export class SidebarComponent implements OnInit {
 
   public selectedItem: any;
 
+  private user: User;
+
   constructor(
-    private _router: Router
+    private _router: Router,
+    private userService: UserService
   ) {
   }
 
   ngOnInit() {
-    this.items = [
-      {
-        key: '0',
-        label: 'Dashboard',
-        icon: 'pi pi-chart-pie',
-        routerLink: '/home/dashboard'
-      },
-      {
-        key: '1',
-        label: 'Certificazioni',
-        icon: 'pi pi-verified',
-        routerLink: '/home/certificates'
-      },
-      {
-        key: '2',
-        label: 'Accessi',
-        icon: 'pi pi-users',
+    this.user = this.userService.currentUser();
+
+    if (this.user?.type === 'ente') {
+      this.items = [
+        {
+          key: '0',
+          label: 'Dashboard',
+          icon: 'pi pi-chart-pie',
+          routerLink: '/home/dashboard'
+        },
+        {
+          key: '1',
+          label: 'Certificazioni',
+          icon: 'pi pi-verified',
+          routerLink: '/home/certificates'
+        },
+        {
+          key: '3',
+          label: 'Impostazioni',
+          icon: 'pi pi-cog'
+        },
+        {
+          key: '4',
+          label: 'Sign out',
+          icon: 'pi pi-sign-out',
+          routerLink: this.userService.currentUser().type === 'ente' ? '/ente/login' : '/user/login'
+        }
+      ];
+    } else if (this.user?.type === 'user') {
+      this.items = [
+        {
+          key: '0',
+          label: 'Dashboard',
+          icon: 'pi pi-chart-pie',
+          routerLink: '/home/dashboard'
+        },
+        {
+          key: '1',
+          label: 'Le mie Certificazioni',
+          icon: 'pi pi-verified',
+          routerLink: '/home/certificates'
+        },
+        {
+          key: '2',
+          label: 'Timeline Accessi',
+          icon: 'pi pi-clock',
+          routerLink: '/home/access-log'
         routerLink: '/home/logAccess'
       },
       {
         key: '3',
-        label: 'Impostazioni',
-        icon: 'pi pi-cog'
-      },
-      {
-        key: '4',
-        label: 'Sign out',
-        icon: 'pi pi-sign-out'
-      }
-    ];
+        label: 'Profilo',
+          icon: 'pi pi-user',
+          routerLink: '/home/profile'
+        },
+        {
+          key: '4',
+          label: 'Sign out',
+          icon: 'pi pi-sign-out',
+          routerLink: this.userService.currentUser().type === 'ente' ? '/ente/login' : '/user/login'
+        }
+      ];
+    }
   }
+
 
   toggleAll() {
     this.expanded = !this.areAllItemsExpanded();
